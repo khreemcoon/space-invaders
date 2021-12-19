@@ -7,16 +7,10 @@ typedef struct{
     SDL_Window* win;
     SDL_Renderer* rend;
 } Window;
-Window* create_win(int w, int h, char* win_name){
-    Window* win;
-    win=malloc(sizeof(Window));
-    win->win=SDL_CreateWindow(win_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
-    win->rend=SDL_Create_renderer(win->win, -1, SDL_RENDERER_ACCELERATED);
-    return win;
-}
-void clear(Window* w, SDL_Color color){
-    SDL_SetRenderDrawColor(w->rend, color.r,color.g,color.b,255);
-    SDL_RenderClear(w->rend);
-}
-void dipslay(Window* w)
+Window* create_win(int w, int h, char* win_name);
+void clear(Window* w, SDL_Color color);
+void dipslay(Window* w);
+void kill_win(Window* w);
+SDL_Texture* load_texture(Window* w, char* path);
+void render_texture(Window* w, SDL_Texture* tex, float x, float y, int wi, int h, double angle, SDL_RendererFlip flip);
 #endif

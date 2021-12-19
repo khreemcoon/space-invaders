@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include "window.h"
 /*Task List:
  *player movement []
  *player shooting []
@@ -13,7 +13,6 @@
  *win []
  *main menu []
 */
-//gato sexo test 2
 int init(){
     if(SDL_Init(SDL_INIT_EVERYTHING) <0)printf("SDL2 has failed to initialize. Error: %s\n", SDL_GetError());
     if(IMG_Init(SDL_INIT_EVERYTHING) < 0)printf("SDL2 Image has failed to initialize. Error: %s\n",IMG_GetError());
