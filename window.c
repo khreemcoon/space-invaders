@@ -17,13 +17,16 @@ void kill_win(Window* w){
     SDL_DestroyWindow(w->win);
 }
 SDL_Texture* load_texture(Window* w, char* path){
-    SDL_Texture* tex = IMG_LoadTexture(w->rend, path);
+    SDL_Texture* tex=IMG_LoadTexture(w->rend, path);
     if(tex==NULL)
         printf("Failed to load texture! IMG_GetError: %s\n", IMG_GetError());
-    else
         return tex;
 }
 void render_texture(Window* w, SDL_Texture* tex, float x, float y, int wi, int h, double angle, SDL_RendererFlip flip){
     SDL_Rect r={x,y,wi,h};
     SDL_RenderCopyEx(w->rend, tex, NULL, &r, angle, NULL, flip);
+}
+void render_entity(Window* w, Entity* ent){
+    SDL_Rect r={ent->x,ent->y,ent->w,ent->h};
+    SDL_RenderCopyEx(w->rend,ent->tex,NULL,&r,ent->angle,NULL,ent->flip);
 }
