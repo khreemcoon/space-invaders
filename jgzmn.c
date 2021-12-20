@@ -7,7 +7,8 @@
 /*Task List:
  *the basic shit    [*]
  *player movement   [*]
- *player shooting   []
+ *player shooting   [] hey are you PISSING me how long is this going to take? all of this FUCKING day i've been doing this shit GOY VEY I HATE C I MOVING TO (((RUST)))
+ ACHTUNG! MEINE NÜSSE WIRD DEINEN MUND TREFFEN!!!!! AHAHA! DU WIRST SIE PROBIEREN!!!!
  *enemy movement    []
  *enemy shooting    []
  *walls             []
@@ -22,14 +23,9 @@ Window* window=NULL;
 Entity* player=NULL;
 SDL_Texture* bullet_t=NULL;
 Timer* shot_t=NULL;
-//LINKED FUCK PISS SHITVVVVVVVVVV
-typedef struct Bullet{
-    Entity* value;
-    struct Bullet* next;
-}Bullet;
+Entity* bullets[255];
 /*number SEX*/
-int can_sht=1;
-int r=0;
+int can_sht=1, r=0, bullets_os=0;
 double dt=0;
 int init(){
     if(SDL_Init(SDL_INIT_EVERYTHING) <0)printf("SDL2 has failed to initialize. Error: %s\n", SDL_GetError());
@@ -37,20 +33,31 @@ int init(){
     window=create_win(800,600,"game");
     SDL_Texture* player_t=load_texture(window,"src/img/player.png");
     player=create_entity(player_t,30,500,32,64,0.0,SDL_FLIP_NONE);
-    shot_t=create_timer(500,0);
+    shot_t=create_timer(250,0);
     bullet_t=load_texture(window,"src/img/bullet.png");
+    for(int i=0;i<255;++i){
+        bullets[i]=NULL;
+    }
     return 1;
 }
 void die(){
     r=0;
     kill_win(window);
     free(window);window=NULL;
+    free(player);player=NULL;
+    free(shot_t);shot_t=NULL;
+    for(int i=0;i<bullets_os;++i){
+        if(bullets[i] != NULL){
+            free(bullets[i]);
+            bullets[i]=NULL;
+        }
+    } 
     SDL_Quit();
 }
 void display(){
     window_clear(window,black);
     render_entity(window,player);
-    for(int i=0;i<255;++i){
+    for(int i=0;i<bullets_os;++i){
         if(bullets[i]!=NULL)
             render_entity(window,bullets[i]);
     }
@@ -59,9 +66,10 @@ void display(){
 void shoot(){
     /*fuck around and make me bust ez*/
     Entity* bullet=create_entity(bullet_t, player->x+15, player->y, 2, 8, 0.0, SDL_FLIP_NONE);
-    //i maka da bvulle,t,,, ^^^
-    Bullet* current=malloc(sizeof(Bullet));
-    current->value=bullet;
+    bullet->yvel=-1;
+    //i makade da bullte;;; dann füge ich sie zu "array" hinzu,,,, ofc i do the sex with onscreen variable
+    ++bullets_os;
+    bullets[bullets_os-1]=bullet;
 }
 void input(){
     SDL_Event e;
@@ -70,6 +78,9 @@ void input(){
             die();
         if(e.type==SDL_KEYDOWN){
             switch(e.key.keysym.sym){
+                case SDLK_ESCAPE:
+                    die();
+                    break;
                 case SDLK_RIGHT:
                     player->xvel=1;
                     break;
@@ -105,10 +116,15 @@ void update(){
             can_sht=1;
     }
     player->x+=(player->xvel*250)*dt;
-    for(int i=0;i<255;++i){
-        if(bullets[i]!=NULL)
+    for(int i=0;i<bullets_os;++i){
+        if(bullets[i]!=NULL){
             bullets[i]->y += (bullets[i]->yvel*500)*dt;
+            if(bullets[i]->y <=-20){
+                 bullets[bullets_os]=NULL;
+            }
+        }
     }
+    printf("Bullets on screen: %d;\n", bullets_os);
 }
 int main(int argc, char**args){
     r=init();
@@ -128,5 +144,6 @@ int main(int argc, char**args){
         if(DELAY>ft)
             SDL_Delay(DELAY-ft);
     }
+    die();
     return 0;
 }
