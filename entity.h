@@ -6,7 +6,7 @@
 typedef struct{
     SDL_Texture* tex;
     float x, y;
-    int w, h;
+    int w, h, xvel, yvel;
     double angle;
     SDL_RendererFlip flip;
 }Entity;
