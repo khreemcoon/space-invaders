@@ -24,11 +24,6 @@ Entity* player=NULL;
 SDL_Texture* bullet_t=NULL;
 Timer* shot_t=NULL;
 /*number SEX*/
-typedef struct jew_list{
-    Entity* data;
-    struct jew_list* next;
-}jew_list;
-jew_list* stage=NULL;
 int can_sht=1, r=0;
 double dt=0;
 int init(){
@@ -39,7 +34,6 @@ int init(){
     player=create_entity(player_t,30,500,32,64,0.0,SDL_FLIP_NONE);
     shot_t=create_timer(250,0);
     bullet_t=load_texture(window,"src/img/bullet.png");
-    stage=malloc(sizeof(jew_list));
     return 1;
 }
 void die(){
@@ -53,11 +47,6 @@ void die(){
 void display(){
     window_clear(window,black);
     render_entity(window,player);
-    jew_list* b;
-    for(b=stage->next;b!=NULL;b=b->next){
-        printf("rendering bullets\n");
-        render_entity(window,b->data);
-    }
     window_display(window);
 }
 void shoot(){
@@ -65,12 +54,7 @@ void shoot(){
     Entity* bullet=create_entity(bullet_t, player->x+15, player->y, 2, 8, 0.0, SDL_FLIP_NONE);
     bullet->yvel=-1;
     //i makade da bullte;;; dann füge ich sie zu "linklist" hinzu,,,, 
-    jew_list* bullet_l=malloc(sizeof(jew_list));
-    bullet_l->data=bullet;
-    /*VVVV even with this code order changed it doesn't work VVVV*/
-    stage->next=bullet_l;
-    stage=bullet_l;
-    printf("bullet sex\n");
+    /*to be completely honest i have no fucking clue what i'm doing*/
 }
 void input(){
     SDL_Event e;
@@ -119,20 +103,9 @@ void update(){
     player->x+=(player->xvel*250)*dt;
     /*goy list*/
     /*this is my THIRD FUCKING TIME IF IT NOT WORK THEN SEX IS FUCK NAHHAHAHAHAHAH!!H!HAHHAHAXAXAXAXOXXOOXOXOXOXO O ich habe deinen Vater gefickt,,,*/
-    jew_list* b,* prev;
-    prev=stage;
-    for(b=stage->next;b!=NULL;b=b->next){
-        printf("bullet updater\n");
-        b->data->y+=b->data->yvel*500*dt;
-        if(b->data->y<=200){
-            if(b==stage)
-                stage=prev;
-            prev->next=b->next;
-            free(b);
-            b=prev;
-        }
-        prev=b;
-    }
+    //fourth fucking time i swear;
+    /*now the fifth.*/
+    /*la bullitas!*/
 }
 int main(int argc, char**args){
     r=init();
