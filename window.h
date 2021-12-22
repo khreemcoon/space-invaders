@@ -15,4 +15,5 @@ void kill_win(Window* w);
 SDL_Texture* load_texture(Window* w, char* path);
 void render_texture(Window* w, SDL_Texture* tex, float x, float y, int wi, int h, double angle, SDL_RendererFlip flip);
 void render_entity(Window* w, Entity* ent);
+
 #endif

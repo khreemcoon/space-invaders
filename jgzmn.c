@@ -23,9 +23,9 @@ Window* window=NULL;
 Entity* player=NULL;
 SDL_Texture* bullet_t=NULL;
 Timer* shot_t=NULL;
-Entity* bullets[255];
+Entity* bullets[50];
 /*number SEX*/
-int can_sht=1, r=0, bullets_os=0;
+int can_sht=1, r=0, bullets_os=0, bullets_to_remove=0;
 double dt=0;
 int init(){
     if(SDL_Init(SDL_INIT_EVERYTHING) <0)printf("SDL2 has failed to initialize. Error: %s\n", SDL_GetError());
@@ -68,8 +68,8 @@ void shoot(){
     Entity* bullet=create_entity(bullet_t, player->x+15, player->y, 2, 8, 0.0, SDL_FLIP_NONE);
     bullet->yvel=-1;
     //i makade da bullte;;; dann füge ich sie zu "array" hinzu,,,, ofc i do the sex with onscreen variable
+    bullets[bullets_os]=bullet;
     ++bullets_os;
-    bullets[bullets_os-1]=bullet;
 }
 void input(){
     SDL_Event e;
@@ -117,14 +117,15 @@ void update(){
     }
     player->x+=(player->xvel*250)*dt;
     for(int i=0;i<bullets_os;++i){
-        if(bullets[i]!=NULL){
-            bullets[i]->y += (bullets[i]->yvel*500)*dt;
-            if(bullets[i]->y <=-20){
-                 bullets[bullets_os]=NULL;
-            }
+        bullets[i]->y += (bullets[i]->yvel*500)*dt;
+        if(bullets[i]->y <=200){
+            /*el problem zone,,*/
+            free(bullets[i]);
+            bullets[i]=NULL;
+            --bullets_os;
         }
+        
     }
-    printf("Bullets on screen: %d;\n", bullets_os);
 }
 int main(int argc, char**args){
     r=init();
@@ -144,6 +145,5 @@ int main(int argc, char**args){
         if(DELAY>ft)
             SDL_Delay(DELAY-ft);
     }
-    die();
     return 0;
 }
