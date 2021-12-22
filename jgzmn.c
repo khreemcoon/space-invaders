@@ -23,9 +23,13 @@ Window* window=NULL;
 Entity* player=NULL;
 SDL_Texture* bullet_t=NULL;
 Timer* shot_t=NULL;
-Entity* bullets[50];
 /*number SEX*/
-int can_sht=1, r=0, bullets_os=0, bullets_to_remove=0;
+typedef struct jew_list{
+    Entity* data;
+    struct jew_list* next;
+}jew_list;
+jew_list* stage=NULL;
+int can_sht=1, r=0;
 double dt=0;
 int init(){
     if(SDL_Init(SDL_INIT_EVERYTHING) <0)printf("SDL2 has failed to initialize. Error: %s\n", SDL_GetError());
@@ -35,9 +39,7 @@ int init(){
     player=create_entity(player_t,30,500,32,64,0.0,SDL_FLIP_NONE);
     shot_t=create_timer(250,0);
     bullet_t=load_texture(window,"src/img/bullet.png");
-    for(int i=0;i<255;++i){
-        bullets[i]=NULL;
-    }
+    stage=malloc(sizeof(jew_list));
     return 1;
 }
 void die(){
@@ -46,20 +48,15 @@ void die(){
     free(window);window=NULL;
     free(player);player=NULL;
     free(shot_t);shot_t=NULL;
-    for(int i=0;i<bullets_os;++i){
-        if(bullets[i] != NULL){
-            free(bullets[i]);
-            bullets[i]=NULL;
-        }
-    } 
     SDL_Quit();
 }
 void display(){
     window_clear(window,black);
     render_entity(window,player);
-    for(int i=0;i<bullets_os;++i){
-        if(bullets[i]!=NULL)
-            render_entity(window,bullets[i]);
+    jew_list* b;
+    for(b=stage->next;b!=NULL;b=b->next){
+        printf("rendering bullets\n");
+        render_entity(window,b->data);
     }
     window_display(window);
 }
@@ -67,9 +64,13 @@ void shoot(){
     /*fuck around and make me bust ez*/
     Entity* bullet=create_entity(bullet_t, player->x+15, player->y, 2, 8, 0.0, SDL_FLIP_NONE);
     bullet->yvel=-1;
-    //i makade da bullte;;; dann füge ich sie zu "array" hinzu,,,, ofc i do the sex with onscreen variable
-    bullets[bullets_os]=bullet;
-    ++bullets_os;
+    //i makade da bullte;;; dann füge ich sie zu "linklist" hinzu,,,, 
+    jew_list* bullet_l=malloc(sizeof(jew_list));
+    bullet_l->data=bullet;
+    /*VVVV even with this code order changed it doesn't work VVVV*/
+    stage->next=bullet_l;
+    stage=bullet_l;
+    printf("bullet sex\n");
 }
 void input(){
     SDL_Event e;
@@ -116,15 +117,21 @@ void update(){
             can_sht=1;
     }
     player->x+=(player->xvel*250)*dt;
-    for(int i=0;i<bullets_os;++i){
-        bullets[i]->y += (bullets[i]->yvel*500)*dt;
-        if(bullets[i]->y <=200){
-            /*el problem zone,,*/
-            free(bullets[i]);
-            bullets[i]=NULL;
-            --bullets_os;
+    /*goy list*/
+    /*this is my THIRD FUCKING TIME IF IT NOT WORK THEN SEX IS FUCK NAHHAHAHAHAHAH!!H!HAHHAHAXAXAXAXOXXOOXOXOXOXO O ich habe deinen Vater gefickt,,,*/
+    jew_list* b,* prev;
+    prev=stage;
+    for(b=stage->next;b!=NULL;b=b->next){
+        printf("bullet updater\n");
+        b->data->y+=b->data->yvel*500*dt;
+        if(b->data->y<=200){
+            if(b==stage)
+                stage=prev;
+            prev->next=b->next;
+            free(b);
+            b=prev;
         }
-        
+        prev=b;
     }
 }
 int main(int argc, char**args){
