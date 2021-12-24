@@ -124,7 +124,7 @@ void update(){
     prev=head;
     for(tmp=head;tmp!=NULL;tmp=tmp->next){
         tmp->data->y+=(tmp->data->yvel*500)*dt;
-        if(tmp->data->y<=200){
+        if(tmp->data->y<=-20){
             /*VVV this isn't the failpoint,,, surpris! VVV*/
             if(tmp==head)
                 head=NULL;
