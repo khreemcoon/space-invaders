@@ -1,4 +1,4 @@
-# space-invaders
+# space invaders
 space invaders made with C and sdl2<br>
 **IN PROGRESS**
 # Installation
