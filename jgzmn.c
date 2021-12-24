@@ -127,9 +127,9 @@ void update(){
         if(tmp->data->y<=200){
             /*VVV this isn't the failpoint,,, surpris! VVV*/
             if(tmp==head)
-                head=prev;
+                head=NULL;
             prev->next=tmp->next;
-            /*this is apparently fail point*/free(tmp);
+            //will leave this alone free(tmp);
             tmp=prev;
         }
         prev=tmp;
