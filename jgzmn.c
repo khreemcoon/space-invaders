@@ -10,7 +10,7 @@
  *player shooting   [] hey are you PISSING me how long is this going to take? all of this FUCKING day i've been doing this shit GOY VEY I HATE C I MOVING TO (((RUST)))
  ACHTUNG! MEINE NÜSSE WIRD DEINEN MUND TREFFEN!!!!! AHAHA! DU WIRST SIE PROBIEREN!!!!
  *enemy movement    []
- *enemy shooting    []
+ *enemy shooting    [] i've spent about... 5? days working on player shooting. I now realise how much of a fucking PAIN this will be to add. hopefully once i crack the player one this will be super easy lol.
  *walls             []
  *sfx               []
  *death             []
@@ -59,7 +59,7 @@ void shoot(){
     /*fuck around and make me bust ez*/
     Entity* bullet=create_entity(bullet_t, player->x+15, player->y, 2, 8, 0.0, SDL_FLIP_NONE);
     bullet->yvel=-1;
-    //i makade da bullte;;; dann füge ich sie zu "linklist" hinzu,,,, 
+    //i makade da bullte;;; dann füge ich sie zu "linkedlist" hinzu,,,, 
     /*to be completely honest i have no fucking clue what i'm doing*/
     /*making bullet linkedlist item*/LL_Bullet* tmp=malloc(sizeof(LL_Bullet));
                                      tmp->data=bullet;
