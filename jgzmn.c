@@ -7,8 +7,8 @@
 /*Task List:
  *the basic shit    [*]
  *player movement   [*]
- *player shooting   [] hey are you PISSING me how long is this going to take? all of this FUCKING day i've been doing this shit GOY VEY I HATE C I MOVING TO (((RUST)))
- ACHTUNG! MEINE NÜSSE WIRD DEINEN MUND TREFFEN!!!!! AHAHA! DU WIRST SIE PROBIEREN!!!!
+ *player shooting   [*] hey are you PISSING me how long is this going to take? all of this FUCKING day i've been doing this shit GOY VEY I HATE C I MOVING TO (((RUST)))
+ ACHTUNG! MEINE NÜSSE WIRD DEINEN MUND TREFFEN!!!!! AHAHA! DU WIRST SIE PROBIEREN!!!! i think i'm done after 5-6 attempts and... 3? days idk
  *enemy movement    []
  *enemy shooting    [] i've spent about... 5? days working on player shooting. I now realise how much of a fucking PAIN this will be to add. hopefully once i crack the player one this will be super easy lol.
  *walls             []
@@ -47,6 +47,7 @@ void die(){
     free(window);window=NULL;
     free(player);player=NULL;
     free(shot_t);shot_t=NULL;
+    free(head);head=NULL;
     SDL_Quit();
 }
 void display(){
@@ -92,6 +93,7 @@ void input(){
                     }
                     break;
             }
+            /*WHORE PIG!*/
         }
         if(e.type==SDL_KEYUP){
             switch(e.key.keysym.sym){
@@ -125,11 +127,10 @@ void update(){
     for(tmp=head;tmp!=NULL;tmp=tmp->next){
         tmp->data->y+=(tmp->data->yvel*500)*dt;
         if(tmp->data->y<=-20){
-            /*VVV this isn't the failpoint,,, surpris! VVV*/
             if(tmp==head)
                 head=NULL;
             prev->next=tmp->next;
-            //will leave this alone free(tmp);
+            //will leave this alone >>> free(tmp);
             tmp=prev;
         }
         prev=tmp;
@@ -149,6 +150,7 @@ int main(int argc, char**args){
         display();
         input();
         update();
+        //now i'll explain what it does when me funtime with your dad by force ;))))
         ft=fs-SDL_GetTicks();
         if(DELAY>ft)
             SDL_Delay(DELAY-ft);
