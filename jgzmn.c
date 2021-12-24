@@ -24,6 +24,11 @@ Entity* player=NULL;
 SDL_Texture* bullet_t=NULL;
 Timer* shot_t=NULL;
 /*number SEX*/
+typedef struct LL_Bullet{
+    Entity* data;
+    struct LL_Bullet* next;
+}LL_Bullet;
+LL_Bullet* head=NULL;
 int can_sht=1, r=0;
 double dt=0;
 int init(){
@@ -34,6 +39,7 @@ int init(){
     player=create_entity(player_t,30,500,32,64,0.0,SDL_FLIP_NONE);
     shot_t=create_timer(250,0);
     bullet_t=load_texture(window,"src/img/bullet.png");
+    head=malloc(sizeof(LL_Bullet));
     return 1;
 }
 void die(){
@@ -55,6 +61,21 @@ void shoot(){
     bullet->yvel=-1;
     //i makade da bullte;;; dann füge ich sie zu "linklist" hinzu,,,, 
     /*to be completely honest i have no fucking clue what i'm doing*/
+    /*making bullet linkedlist item*/LL_Bullet* tmp=malloc(sizeof(LL_Bullet));
+                                     tmp->data=bullet;
+    /*new entry in the linked list */tmp->next=head;
+                                     head=tmp;
+    /*afaik it makes it go like this:
+     * head    tmp
+     * [x|n]  [x|n]
+     * tmp     head
+     * [x|n]->[x|n]
+     * so basically
+     * tmp is the new head
+     * and head is the next item
+     * idk tho
+     * this explanation is for me only
+     */
 }
 void input(){
     SDL_Event e;
