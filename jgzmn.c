@@ -39,7 +39,6 @@ int init(){
     player=create_entity(player_t,30,500,32,64,0.0,SDL_FLIP_NONE);
     shot_t=create_timer(250,0);
     bullet_t=load_texture(window,"src/img/bullet.png");
-    head=malloc(sizeof(LL_Bullet));
     return 1;
 }
 void die(){
@@ -53,6 +52,10 @@ void die(){
 void display(){
     window_clear(window,black);
     render_entity(window,player);
+    LL_Bullet* tmp;
+    for(tmp=head;tmp!=NULL;tmp=tmp->next){
+        render_entity(window, tmp->data);
+    }
     window_display(window);
 }
 void shoot(){
@@ -65,17 +68,6 @@ void shoot(){
                                      tmp->data=bullet;
     /*new entry in the linked list */tmp->next=head;
                                      head=tmp;
-    /*afaik it makes it go like this:
-     * head    tmp
-     * [x|n]  [x|n]
-     * tmp     head
-     * [x|n]->[x|n]
-     * so basically
-     * tmp is the new head
-     * and head is the next item
-     * idk tho
-     * this explanation is for me only
-     */
 }
 void input(){
     SDL_Event e;
@@ -127,6 +119,20 @@ void update(){
     //fourth fucking time i swear;
     /*now the fifth.*/
     /*la bullitas!*/
+    /*...again.*/
+    LL_Bullet* tmp,* prev;
+    prev=head;
+    for(tmp=head;tmp!=NULL;tmp=tmp->next){
+        tmp->data->y+=(tmp->data->yvel*500)*dt;
+        if(tmp->data->y<=200){
+            if(tmp==head)
+                head=prev;
+            prev->next=tmp->next;
+            free(tmp);
+            tmp=prev;
+        }
+        prev=tmp;
+    }
 }
 int main(int argc, char**args){
     r=init();
