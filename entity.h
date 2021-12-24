@@ -6,10 +6,9 @@
 typedef struct Entity{
     SDL_Texture* tex;
     float x, y;
-    int w, h, xvel, yvel;
+    int w, h, xvel, yvel, hp;
     double angle;
-    struct Entity* next;
     SDL_RendererFlip flip;
 }Entity;
-Entity* create_entity(SDL_Texture* tex, float x, float y, int w, int h, double angle, SDL_RendererFlip flip);
+Entity* create_entity(SDL_Texture* tex, float x, float y, int w, int h, double angle, SDL_RendererFlip flip, int hp);
 #endif
